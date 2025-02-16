@@ -1,0 +1,88 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/bt.h>
+
+#define DEFAULT 0
+#define LOWER   1
+#define RAISE   2
+#define ADJUST  3
+#define HYPER   4
+
+#define HYPR(KC) LA(LG(KC))
+
+/ {
+
+        conditional_layers {
+                compatible = "zmk,conditional-layers";
+
+                tri_layer {
+                        if-layers  = <1 2>;
+                        then-layer = <3>;
+                };
+        };
+
+        keymap {
+                compatible = "zmk,keymap";
+                default_layer {
+                        bindings = <
+&kp EQUAL   &kp N1      &kp N2      &kp N3          &kp N4      &kp N5              &kp N6          &kp N7      &kp N8          &kp N9      &kp N0      &kp MINUS
+&kp TAB     &kp Q       &kp W       &kp E           &kp R       &kp T               &kp Y           &kp U       &kp I           &kp O       &kp P       &kp BSLH
+&kp GRAVE   &kp A       &kp S       &kp D           &kp F       &kp G               &kp H           &kp J       &kp K           &kp L       &kp SEMI    &kp SQT
+&kp LSHFT   &kp Z       &kp X       &kp C           &kp V       &kp B               &kp N           &kp M       &kp COMMA       &kp DOT     &kp SLASH   &kp RSHFT
+&mo HYPER   &kp PG_DN   &kp PG_UP   &kp DEL         &kp LCTRL   &none               &none           &kp RCTRL   &kp LEFT        &kp DOWN    &kp UP      &kp RIGHT
+                        &kp SPACE   &lt LOWER ESC   &kp LMETA   &mt LALT LBKT       &mt RALT RBKT   &kp RMETA   &lt RAISE ENTER &kp BSPC
+                        >;
+                };
+
+                lower_layer {
+                        bindings = <
+&kp F1  &kp F2  &kp F3  &kp F4  &kp F5  &kp F6              &kp F7      &kp F8      &kp F9  &kp F10     &kp F11     &kp  F12
+&none   &none   &none   &none   &none   &none               &none       &none       &none   &none       &none       &none
+&none   &none   &none   &none   &none   &none               &kp LEFT    &kp DOWN    &kp UP  &kp RIGHT   &none       &none
+&none   &none   &none   &none   &none   &none               &none       &none       &none   &none       &none       &none
+&trans  &trans  &trans  &trans  &trans  &trans              &trans      &none       &kp HOME   &kp PG_DN   &kp PG_UP   &kp END
+                &trans  &trans  &trans  &trans              &trans  &trans  &trans  &trans
+                        >;
+                };
+
+                raise_layer {
+                        bindings = <
+&kp F1  &kp F2  &kp F3  &kp F4  &kp F5  &kp F6              &kp F7      &kp F8      &kp F9  &kp F10     &kp F11     &kp  F12
+&none   &none   &none   &none   &none   &none               &none       &none       &none   &none       &none       &none
+&none   &none   &none   &none   &none   &none               &kp LEFT    &kp DOWN    &kp UP  &kp RIGHT   &none       &none
+&none   &none   &none   &none   &none   &none               &none       &none       &none   &none       &none       &none
+&trans  &trans  &trans  &trans  &trans  &trans              &trans      &none       &kp HOME   &kp PG_DN   &kp PG_UP   &kp END
+                &trans  &trans  &trans  &trans              &trans  &trans  &trans  &trans
+                        >;
+                };
+
+                adjust_layer {
+                        bindings = <
+&bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &bt BT_SEL 5               &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &bt BT_SEL 5
+&none        &none        &none        &none        &none        &none                      &none        &none        &none        &none        &none        &none
+&none        &none        &none        &none        &none        &none                      &none        &none        &none        &none        &none        &none
+&none        &none        &none        &none        &none        &none                      &none        &none        &none        &none        &none        &none
+&bt BT_CLR   &none        &none        &none        &none        &none                      &none        &none        &none        &none        &none        &bt BT_CLR
+                          &none        &trans       &none        &none                      &none        &none        &trans       &none
+                        >;
+                };
+
+                hyper_layer {
+                        bindings = <
+&trans        &trans     &trans      &trans      &trans      &trans             &kp K_PREV        &kp K_PP         &kp K_NEXT        &kp K_MUTE  &kp K_VOL_DN  &kp K_VOL_UP
+&trans        &trans     &trans      &trans      &trans      &trans             &kp HYPR(KP_N7)   &kp HYPR(KP_N8)  &kp HYPR(KP_N9)   &trans      &trans        &none
+&trans        &trans     &trans      &trans      &trans      &trans             &kp HYPR(KP_N4)   &kp HYPR(KP_N5)  &kp HYPR(KP_N6)   &trans      &trans        &none
+&trans        &trans     &trans      &trans      &trans      &trans             &kp HYPR(KP_N1)   &kp HYPR(KP_N2)  &kp HYPR(KP_N3)   &trans      &trans        &none
+&trans        &trans     &trans      &trans      &trans      &trans             &trans            &trans           &trans            &trans      &trans        &none
+                         &none       &trans      &none       &none              &none             &none            &trans            &none
+                        >;
+                };
+        };
+};
